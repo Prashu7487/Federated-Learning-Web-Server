@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class User(BaseModel):
     name: str
     data_path: str
-    email: str
+    password: str
 
 class Parameter(BaseModel):
     client_parameter: dict

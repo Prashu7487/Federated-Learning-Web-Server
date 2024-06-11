@@ -3,8 +3,10 @@ from . import schema
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
 from .utility.Server import Server
+import asyncio
 
 
+event = asyncio.Event()
 
 app = FastAPI()
 
@@ -17,18 +19,21 @@ app.add_middleware(
 )
 
 user = []
-
-STREAM_DELAY = 5 # second
-RETRY_TIMEOUT = 15000  # milisecond
 round = 1
 global_parameters = {}
 max_round = 5
 server = Server(global_parameters,max_round)
 
+async def event_generator():
+    while(True):
+        await event.wait()
+        event.clear()
+        data = f"Ask Round {round} parameters"
+        yield {
+            "event": "message",
+            "data": data
+        }
 
-def event_generator():
-    data = f"Ask Round {round} parameters"
-    yield data
 
 @app.get('/events')
 async def sse_endpoint():
@@ -37,6 +42,9 @@ async def sse_endpoint():
 @app.post('/sign-in')
 def signIn(request: schema.User):
     user.append(request)
+
+    event.set()
+
     print(f"{request.name} is registered")
     return {"message": "Client Registered Successfully"}
 
@@ -77,3 +85,5 @@ async def start_federated_learning():
         # Aggregate
         server.aggregate_weights_fedAvg_Neural()
         
+
+
