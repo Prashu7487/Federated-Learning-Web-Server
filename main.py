@@ -42,11 +42,13 @@ async def sse_endpoint():
 @app.post('/sign-in')
 def signIn(request: schema.User):
     user.append(request)
-
-    event.set()
-
     print(f"{request.name} is registered")
     return {"message": "Client Registered Successfully"}
+
+
+@app.post('/request-federated-learning')
+def requestFederatedLearning(request: schema.FederatedLearningInfo):
+    return {"message":"Request Received Successfully","data": request}
 
 @app.get('/get-parameters')
 def getParameters():

@@ -9,3 +9,12 @@ class User(BaseModel):
 class Parameter(BaseModel):
     client_parameter: dict
     client_id: int
+
+
+class FederatedLearningInfo(BaseModel):
+    organisation_name: str
+    model_name : str
+    model_info: dict
+    dataset_info: dict
+
+    
