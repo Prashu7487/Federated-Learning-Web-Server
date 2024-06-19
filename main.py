@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
 from .utility.Server import Server
 import asyncio
+import random
 
 
 event = asyncio.Event()
@@ -23,6 +24,16 @@ round = 1
 global_parameters = {}
 max_round = 5
 server = Server(global_parameters,max_round)
+client_dict: {}
+
+
+def generate_client_id():
+    client_id = random.randint(1000, 99999)
+    while client_dict[client_id] is not None:
+        client_id = random.randint(1000, 99999)
+    client_dict[client_id] = True
+    return client_id
+
 
 async def event_generator():
     while(True):
@@ -43,7 +54,7 @@ async def sse_endpoint():
 def signIn(request: schema.User):
     user.append(request)
     print(f"{request.name} is registered")
-    return {"message": "Client Registered Successfully"}
+    return {"message": "Client Registered Successfully","ClientID": generate_client_id()}
 
 
 @app.post('/request-federated-learning')
