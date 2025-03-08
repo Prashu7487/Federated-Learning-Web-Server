@@ -1,9 +1,13 @@
 .env
 __pycache__
 /backend/app/database.db
-/frontend/node_modules
+/frontend/app/node_modules
 work.md
 global_test_data
 global_parameters.txt
 testing_parameters.txt
 aggregated_sums.txt
+.idea
+/.vscode
+.vscode
+.fedserver

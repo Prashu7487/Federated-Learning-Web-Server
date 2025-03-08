@@ -219,6 +219,9 @@
     <option name="localTasksCounter" value="19" />
     <servers />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.ini" />
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="modified sign-in end point" />
     <MESSAGE value="corrected requirements.txt and optimized imports, corrected all warnings" />
